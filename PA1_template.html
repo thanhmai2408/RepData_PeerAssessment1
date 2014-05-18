@@ -190,7 +190,7 @@ hljs.initHighlightingOnLoad();
 <li>Set working directory to the folder where the dataset located</li>
 <li>Unzip file</li>
 <li>Load data into data frame by using read.csv() </li>
-<li>Transform the date column into </li>
+<li>Transform the date column into a format suitable for analysis </li>
 </ol>
 
 <pre><code class="r">df &lt;- read.csv(&quot;activity.csv&quot;, colClasses = c(&quot;numeric&quot;, &quot;character&quot;, &quot;numeric&quot;))
@@ -215,6 +215,11 @@ summary(df)
 <li>Make a histogram of the total number of steps taken each day</li>
 </ol>
 
+<ul>
+<li>Use aggregate method to group steps by date</li>
+<li>Use hist method to make a histogram</li>
+</ul>
+
 <pre><code class="r">steps_by_day &lt;- aggregate(steps ~ date, df, sum, na.rm = TRUE)
 hist(steps_by_day$steps)
 </code></pre>
@@ -236,6 +241,11 @@ hist(steps_by_day$steps)
 
 <pre><code>## [1] 10765
 </code></pre>
+
+<ul>
+<li>Mean of total number of steps taken per day is <strong>1.0766 &times; 10<sup>4</sup></strong></li>
+<li>Median of total number of steps taken per day is <strong>1.0765 &times; 10<sup>4</sup></strong></li>
+</ul>
 
 <h2>What is the average daily activity pattern?</h2>
 
@@ -259,6 +269,10 @@ plot(steps_by_interval, type = &quot;l&quot;)
 <pre><code>## [1] 835
 </code></pre>
 
+<ul>
+<li>The interval that contain the maximum number of steps is 835</li>
+</ul>
+
 <h2>Imputing missing values</h2>
 
 <ol>
@@ -271,9 +285,19 @@ plot(steps_by_interval, type = &quot;l&quot;)
 <pre><code>## [1] 2304
 </code></pre>
 
+<ul>
+<li>Total number of missing values in the dataset is 2304</li>
+</ul>
+
 <ol>
-<li>Devise a strategy for filling in all of the missing values in the dataset.The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
-In order to fill in the NA value, I will use the mean of steps for that particular 5-minute interval</li>
+<li>Devise a strategy for filling in all of the missing values in the dataset.The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.</li>
+</ol>
+
+<ul>
+<li>In order to fill in the NA value, I will use the mean of steps for that particular 5 minute interval</li>
+</ul>
+
+<ol>
 <li>Create a new dataset that is equal to the original dataset but with the missing data filled in.</li>
 </ol>
 
@@ -308,12 +332,23 @@ hist(steps_by_day_NEW$steps)
 <pre><code>## [1] 10766
 </code></pre>
 
-<ol>
-<li><p>Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
-The result are the same. Only slight difference in median.</p>
+<ul>
+<li>The new mean of total number of steps taken per day is 1.0766 &times; 10<sup>4</sup></li>
+<li>The new median of total number of steps taken per day is 1.0766 &times; 10<sup>4</sup></li>
+</ul>
 
-<h2>Are there differences in activity patterns between weekdays and weekends?</h2></li>
-<li><p>Create a new factor variable in the dataset with two levels - &ldquo;weekday&rdquo; and &ldquo;weekend&rdquo; indicating whether a given date is a weekday or weekend day.</p></li>
+<ol>
+<li>Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?</li>
+</ol>
+
+<ul>
+<li>The result are the same. Only slight difference in median.</li>
+</ul>
+
+<h2>Are there differences in activity patterns between weekdays and weekends?</h2>
+
+<ol>
+<li>Create a new factor variable in the dataset with two levels - &ldquo;weekday&rdquo; and &ldquo;weekend&rdquo; indicating whether a given date is a weekday or weekend day.</li>
 </ol>
 
 <pre><code class="r">newData$TypeOfDay &lt;- factor(ifelse(weekdays(as.Date(newData$date)) %in% c(&quot;Saturday&quot;, 

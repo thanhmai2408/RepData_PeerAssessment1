@@ -8,7 +8,7 @@ Steps taken:
 2. Set working directory to the folder where the dataset located
 3. Unzip file
 4. Load data into data frame by using read.csv() 
-5. Transform the date column into 
+5. Transform the date column into a format suitable for analysis 
 
 ```r
 df <- read.csv("activity.csv", colClasses = c("numeric", "character", "numeric"))
@@ -31,6 +31,8 @@ summary(df)
 ## What is mean total number of steps taken per day?
 1. Make a histogram of the total number of steps taken each day
 
+- Use aggregate method to group steps by date
+- Use hist method to make a histogram
 
 ```r
 steps_by_day <- aggregate(steps ~ date, df, sum, na.rm = TRUE)
@@ -59,6 +61,9 @@ median(steps_by_day$steps)
 ```
 
 
+- Mean of total number of steps taken per day is **1.0766 &times; 10<sup>4</sup>**
+- Median of total number of steps taken per day is **1.0765 &times; 10<sup>4</sup>**
+
 ## What is the average daily activity pattern?
 1. Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
@@ -80,6 +85,8 @@ steps_by_interval$interval[which.max(steps_by_interval$steps)]
 ## [1] 835
 ```
 
+- The interval that contain the maximum number of steps is 835
+
 ## Imputing missing values
 1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
 
@@ -91,8 +98,13 @@ sum(is.na(df$steps))
 ## [1] 2304
 ```
 
+
+- Total number of missing values in the dataset is 2304
+
 2. Devise a strategy for filling in all of the missing values in the dataset.The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
-In order to fill in the NA value, I will use the mean of steps for that particular 5-minute interval
+
+- In order to fill in the NA value, I will use the mean of steps for that particular 5 minute interval
+
 3. Create a new dataset that is equal to the original dataset but with the missing data filled in.
 
 ```r
@@ -132,8 +144,14 @@ median(steps_by_day_NEW$steps)
 ## [1] 10766
 ```
 
+
+- The new mean of total number of steps taken per day is 1.0766 &times; 10<sup>4</sup>
+- The new median of total number of steps taken per day is 1.0766 &times; 10<sup>4</sup>
+
 5. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
-The result are the same. Only slight difference in median.
+
+- The result are the same. Only slight difference in median.
+
 ## Are there differences in activity patterns between weekdays and weekends?
 
 1. Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
